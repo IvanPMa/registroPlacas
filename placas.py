@@ -81,7 +81,7 @@ while True:
             placa = frame[ypi:ypf, xpi:xpf]
 
             # Extramios el ancho y el alto de los fotogramas
-            alp, amp, cp = placa.shape
+            alp, anp, cp = placa.shape
             #print(alp, anp)
 
             #Procesamos los pixeles para extraer los valores de las placas
@@ -93,4 +93,52 @@ while True:
             mRp = np.matrix(placa[:, :, 2])
 
             # Creamos una mascara
+            for col in range(0, alp):
+                for fil in range(0, anp):
+                    Max = mas(mRp[col, fil], mGp[col, fil], mBp[col, fil])
+                    Mva[col,fil] = 255 - Max
+
             
+            # Binarizamos la imagen
+            _. bin = cv2.threshold(Mva, 150, 255, cv2.THRESH_BINARY)
+
+            #Convertimos la matriz en imgaen
+            bin = bin.reshape(alp, anp)
+            bin = Image.fromarray(bin)
+            bin = bin.convert("L")
+
+            #Nos aseguramos de tener un buen tamaño de la placa 
+            if apl >= 36 and anp >= 82:
+
+                # Declaramos la direccion de Pytesseract
+                pytesseract.pytesseract.tesseract_cmd = r'c:\Program Files\Tesseract-OCR\tesseract.exe'
+
+                #Extraemos el texto
+                config = "--psm 1"
+                texto = pytesseract.image_to_string(bin, config = config)
+
+                #if para no mostrar basura
+                if len(texto) >= 6:
+                    #print(texto[0:7])
+
+                    Ctexto = texto
+
+                    #Mostramos los valores que nos interesan
+                    cv2.putText(frame, Ctexto[0:7], (910, 810), cv2.FONT_HERSHEY_SIMPLEX, 1, (0,255, 0), 2)
+            break
+            
+            #Mostrmos el recorte
+            # cv2.imshow("Recorte", bin)
+    
+
+    #Mostramos el recorte en gris
+    cv2.imshow("Vehiculos", frame)
+
+    # Leemos una tecla
+    t = cv2.waitKey(1)
+
+    if t == 27:
+        break
+
+cap.release()
+cv2.destroyAllWindows()
