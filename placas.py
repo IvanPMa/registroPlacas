@@ -5,7 +5,7 @@ import pytesseract
 from PIL import Image
 
 #Importados el video
-cap = cv2.VideoCapture("videoPlacas.pm4")
+cap = cv2.VideoCapture("videoPlacas.mp4")
 
 Ctexto = ''
 
@@ -34,7 +34,7 @@ while True:
     y2 = int(y1 * 2) #Hasta el inicio del 3/3 de la imagen
 
     #Texto en pantalla
-    cv2.rectangle(frame, (x1 + 160, y1 + 500), (1120, 940), (0,0,0), cv2.FILED)
+    cv2.rectangle(frame, (x1 + 160, y1 + 500), (1120, 940), (0,0,0), cv2.FILLED)
     cv2.putText(frame, 'Procesando Placa', (x1 + 180, y1 + 550 ), cv2.FONT_HERSHEY_COMPLEX, 1,(0,255,0),2)
 
     #ubicamos el rectangulo en las zonas extraidas
@@ -55,17 +55,17 @@ while True:
     _, umbral = cv2.threshold(Color, 40, 255, cv2.THRESH_BINARY)
 
     #Extraemos los contornos de la zona seleccionada
-    contornos, _ = cv2.findContours(umbral, cv2.RETR_ TREE, cv2.CHAIN_APPROX_SIMPLE)
+    contornos,_ = cv2.findContours(umbral, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
     #Primero los ordenamos del mas grande al mas pequeño
-    contornos = sorted(contornos, key lambda x: cv2.contourArea(x), reverse=True)
+    contornos = sorted(contornos, key=lambda x: cv2.contourArea(x), reverse=True)
 
     #Dibujamos los contornos extraidos
     for contorno in contornos:
         area = cv2.contourArea(contorno)
         if area > 500 and area < 5000:
             #Detectamos la placa
-            x, y, ancho, alto = cv2.cv2.boundingRect(contorno)
+            x, y, ancho, alto = cv2.boundingRect(contorno)
 
             # Extraemos las coordenadas
             xpi = x + x1            #Coordenada de la placa en X inicial
@@ -95,12 +95,12 @@ while True:
             # Creamos una mascara
             for col in range(0, alp):
                 for fil in range(0, anp):
-                    Max = mas(mRp[col, fil], mGp[col, fil], mBp[col, fil])
+                    Max = max(mRp[col, fil], mGp[col, fil], mBp[col, fil])
                     Mva[col,fil] = 255 - Max
 
             
             # Binarizamos la imagen
-            _. bin = cv2.threshold(Mva, 150, 255, cv2.THRESH_BINARY)
+            _, bin = cv2.threshold(Mva, 150, 255, cv2.THRESH_BINARY)
 
             #Convertimos la matriz en imgaen
             bin = bin.reshape(alp, anp)
@@ -108,7 +108,7 @@ while True:
             bin = bin.convert("L")
 
             #Nos aseguramos de tener un buen tamaño de la placa 
-            if apl >= 36 and anp >= 82:
+            if alp >= 36 and anp >= 82:
 
                 # Declaramos la direccion de Pytesseract
                 pytesseract.pytesseract.tesseract_cmd = r'c:\Program Files\Tesseract-OCR\tesseract.exe'
