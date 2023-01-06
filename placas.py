@@ -1,16 +1,22 @@
-#SISTEMAS EXPERTOS - IVAN PACHECO MALDOANDO
+'''
+        SISTEMAS EXPERTOS
+        IVAN PACHECO MALDONADO
+        PROYECTO: REGISTRO HORARIO DE COCHES
+
+'''
 import cv2
 import numpy as np
 import pytesseract
 import datetime
 from PIL import Image
 
-#Importados el video
+#Traemos el video
 cap = cv2.VideoCapture("prueba.mp4")
 
+#Aqui ira el texto de la placa
 Ctexto = ''
 
-#Comanzamos con nuestro while True
+
 while True:
     # Lectura del video
     ret, frame = cap.read()
@@ -18,9 +24,9 @@ while True:
     if ret == False:
         break
 
-    #Dibujamos el area donde vamos a tomar la muestra
-    cv2.rectangle(frame, (870, 750), (1070,850), (255,255,255), cv2.FILLED)
-    cv2.putText(frame, Ctexto[0:7], (900, 810), cv2.FONT_HERSHEY_SIMPLEX, 1, (0,0,0), 2)
+    #Indicamos el area donde se tomara la muestra
+    #cv2.rectangle(frame, (870, 750), (1070,850), (255,255,255), cv2.FILLED)
+    cv2.putText(frame, Ctexto[0:7], (900, 810), cv2.FONT_HERSHEY_SIMPLEX, 1, (0,255,0), 2)
 
     #Extraemos el ancho y el alto de los fotogramas del video
     al, an, c = frame.shape
@@ -35,8 +41,8 @@ while True:
     y2 = int(y1 * 2) #Hasta el inicio del 3/3 de la imagen
 
     #Texto en pantalla
-    cv2.rectangle(frame, (x1 + 160, y1 + 500), (1120, 940), (255,255,255), cv2.FILLED)
-    cv2.putText(frame, 'Capturando...', (x1 + 180, y1 + 550 ), cv2.FONT_HERSHEY_SIMPLEX, 1,(0,0,0),2)
+    #cv2.rectangle(frame, (x1 + 160, y1 + 500), (1120, 940), (255,255,255), cv2.FILLED)
+    cv2.putText(frame, 'Capturando...', (x1 + 180, y1 + 550 ), cv2.FONT_HERSHEY_SIMPLEX, 1,(0,255,0),2)
 
     #ubicamos el rectangulo en las zonas extraidas
     cv2.rectangle(frame, (x1, y1) , (x2, y2), (255, 255, 255 ), 2)
@@ -138,7 +144,7 @@ while True:
     
 
     #Mostramos el recorte en gris
-    ims = cv2.resize(frame, (854,480))
+    ims = cv2.resize(frame, (960,640))
     cv2.imshow("Captura", ims)
 
     # Leemos una tecla
