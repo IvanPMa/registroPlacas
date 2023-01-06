@@ -5,7 +5,7 @@ import pytesseract
 from PIL import Image
 
 #Importados el video
-cap = cv2.VideoCapture("videoPlacas.mp4")
+cap = cv2.VideoCapture("video.mp4")
 
 Ctexto = ''
 
@@ -49,10 +49,10 @@ while True:
     mR = np.matrix(recorte[:, :, 2])
 
     #Color
-    Color = cv2.absdiff(mG, mB)
+    Color = cv2.absdiff(mB, mG)
 
     #Binarizamos la imagen
-    _, umbral = cv2.threshold(Color, 40, 255, cv2.THRESH_BINARY)
+    _, umbral = cv2.threshold(Color, 100, 255, cv2.THRESH_BINARY)
 
     #Extraemos los contornos de la zona seleccionada
     contornos,_ = cv2.findContours(umbral, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
@@ -108,7 +108,7 @@ while True:
             bin = bin.convert("L")
 
             #Nos aseguramos de tener un buen tamaño de la placa 
-            if alp >= 26 and anp >= 72:
+            if alp >= 36 and anp >= 82:
 
                 # Declaramos la direccion de Pytesseract
                 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
