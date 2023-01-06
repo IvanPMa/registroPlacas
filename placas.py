@@ -2,6 +2,7 @@
 import cv2
 import numpy as np
 import pytesseract
+import datetime
 from PIL import Image
 
 #Importados el video
@@ -122,6 +123,11 @@ while True:
                     #print(texto[0:7])
                         
                     Ctexto = texto
+
+                    if len(texto) > 5:
+                        placaRegistro = texto
+                        fechaActual = datetime.datetime.now()
+                        print(f'Placa {placaRegistro} registrada en el horario {fechaActual}')
 
                     #Mostramos los valores que nos interesan
                     #cv2.putText(frame, Ctexto[0:7], (910, 810), cv2.FONT_HERSHEY_SIMPLEX, 1, (0,255, 0), 2)
