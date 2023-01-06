@@ -18,8 +18,8 @@ while True:
         break
 
     #Dibujamos el area donde vamos a tomar la muestra
-    cv2.rectangle(frame, (870, 750), (1070,850), (0,0,0), cv2.FILLED)
-    cv2.putText(frame, Ctexto[0:7], (900, 810), cv2.FONT_HERSHEY_SIMPLEX, 1, (0,255,0), 2)
+    cv2.rectangle(frame, (870, 750), (1070,850), (255,255,255), cv2.FILLED)
+    cv2.putText(frame, Ctexto[0:7], (900, 810), cv2.FONT_HERSHEY_SIMPLEX, 1, (0,0,0), 2)
 
     #Extraemos el ancho y el alto de los fotogramas del video
     al, an, c = frame.shape
@@ -34,14 +34,14 @@ while True:
     y2 = int(y1 * 2) #Hasta el inicio del 3/3 de la imagen
 
     #Texto en pantalla
-    cv2.rectangle(frame, (x1 + 160, y1 + 500), (1120, 940), (0,0,0), cv2.FILLED)
-    cv2.putText(frame, 'Procesando Placa', (x1 + 180, y1 + 550 ), cv2.FONT_HERSHEY_COMPLEX, 1,(0,255,0),2)
+    cv2.rectangle(frame, (x1 + 160, y1 + 500), (1120, 940), (255,255,255), cv2.FILLED)
+    cv2.putText(frame, 'Capturando...', (x1 + 180, y1 + 550 ), cv2.FONT_HERSHEY_SIMPLEX, 1,(0,0,0),2)
 
     #ubicamos el rectangulo en las zonas extraidas
-    cv2.rectangle(frame, (x1, y1) , (x2, y2), (0, 255, 0 ), 2)
+    cv2.rectangle(frame, (x1, y1) , (x2, y2), (255, 255, 255 ), 2)
 
     #Realizamos un recorte a nuestra zona de interes
-    recorte = frame[y1:y2 , x1: x2]
+    recorte = frame[y1:y2 , x1:x2]
 
     # Preprocesamiento de la zona de interes
     mB = np.matrix(recorte[:, :, 0])
@@ -75,7 +75,7 @@ while True:
             ypf = y + alto + y1     #Coordenada de la placa en Y final 
 
             #Dibujamos el rectangulo 
-            cv2.rectangle(frame, (xpi, ypi), (xpf, ypf), (255,255,0), 2)
+            cv2.rectangle(frame, (xpi, ypi), (xpf, ypf), (0,255,0), 2)
 
             #Extraemos los pixeles
             placa = frame[ypi:ypf, xpi:xpf]
@@ -108,14 +108,14 @@ while True:
             bin = bin.convert("L")
 
             #Nos aseguramos de tener un buen tamaño de la placa 
-            if alp >= 36 and anp >= 82:
+            if alp >= 26 and anp >= 72:
 
                 # Declaramos la direccion de Pytesseract
-                pytesseract.pytesseract.tesseract_cmd = r'c:\Program Files\Tesseract-OCR\tesseract.exe'
+                pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 
                 #Extraemos el texto
                 config = "--psm 1"
-                texto = pytesseract.image_to_string(bin, config = config)
+                texto = pytesseract.image_to_string(bin, config=config)
 
                 #if para no mostrar basura
                 if len(texto) >= 6:
@@ -124,7 +124,7 @@ while True:
                     Ctexto = texto
 
                     #Mostramos los valores que nos interesan
-                    cv2.putText(frame, Ctexto[0:7], (910, 810), cv2.FONT_HERSHEY_SIMPLEX, 1, (0,255, 0), 2)
+                    #cv2.putText(frame, Ctexto[0:7], (910, 810), cv2.FONT_HERSHEY_SIMPLEX, 1, (0,255, 0), 2)
             break
             
             #Mostrmos el recorte
@@ -132,7 +132,7 @@ while True:
     
 
     #Mostramos el recorte en gris
-    ims = cv2.resize(frame, (900,600))
+    ims = cv2.resize(frame, (854,480))
     cv2.imshow("Vehiculos", ims)
 
     # Leemos una tecla
