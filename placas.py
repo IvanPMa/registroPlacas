@@ -5,7 +5,7 @@ import pytesseract
 from PIL import Image
 
 #Importados el video
-cap = cv2.VideoCapture("video.mp4")
+cap = cv2.VideoCapture("prueba.mp4")
 
 Ctexto = ''
 
@@ -52,7 +52,7 @@ while True:
     Color = cv2.absdiff(mG, mB)
 
     #Binarizamos la imagen
-    _, umbral = cv2.threshold(Color, 78, 255, cv2.THRESH_BINARY)
+    _, umbral = cv2.threshold(Color, 68, 255, cv2.THRESH_BINARY)
 
     #Extraemos los contornos de la zona seleccionada
     contornos,_ = cv2.findContours(umbral, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
@@ -120,7 +120,7 @@ while True:
                 #if para no mostrar basura
                 if len(texto) >= 6:
                     #print(texto[0:7])
-
+                        
                     Ctexto = texto
 
                     #Mostramos los valores que nos interesan
