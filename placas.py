@@ -45,7 +45,7 @@ while True:
     cv2.putText(frame, 'Capturando...', (x1 + 180, y1 + 550 ), cv2.FONT_HERSHEY_SIMPLEX, 1,(0,255,0),2)
 
     #ubicamos el rectangulo en las zonas extraidas
-    cv2.rectangle(frame, (x1, y1) , (x2, y2), (255, 255, 255 ), 2)
+    #cv2.rectangle(frame, (x1, y1) , (x2, y2), (255, 255, 255 ), 2)
 
     #Realizamos un recorte a nuestra zona de interes
     recorte = frame[y1:y2 , x1:x2]
