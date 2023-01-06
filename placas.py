@@ -132,7 +132,8 @@ while True:
     
 
     #Mostramos el recorte en gris
-    cv2.imshow("Vehiculos", frame)
+    ims = cv2.resize(frame, (900,600))
+    cv2.imshow("Vehiculos", ims)
 
     # Leemos una tecla
     t = cv2.waitKey(1)
