@@ -52,7 +52,7 @@ while True:
     Color = cv2.absdiff(mG, mB)
 
     #Binarizamos la imagen
-    _, umbral = cv2.threshold(Color, 68, 255, cv2.THRESH_BINARY)
+    _, umbral = cv2.threshold(Color, 78, 255, cv2.THRESH_BINARY)
 
     #Extraemos los contornos de la zona seleccionada
     contornos,_ = cv2.findContours(umbral, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
@@ -133,7 +133,7 @@ while True:
 
     #Mostramos el recorte en gris
     ims = cv2.resize(frame, (854,480))
-    cv2.imshow("Vehiculos", ims)
+    cv2.imshow("Captura", ims)
 
     # Leemos una tecla
     t = cv2.waitKey(1)
