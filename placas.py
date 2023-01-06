@@ -49,10 +49,10 @@ while True:
     mR = np.matrix(recorte[:, :, 2])
 
     #Color
-    Color = cv2.absdiff(mB, mG)
+    Color = cv2.absdiff(mG, mB)
 
     #Binarizamos la imagen
-    _, umbral = cv2.threshold(Color, 100, 255, cv2.THRESH_BINARY)
+    _, umbral = cv2.threshold(Color, 68, 255, cv2.THRESH_BINARY)
 
     #Extraemos los contornos de la zona seleccionada
     contornos,_ = cv2.findContours(umbral, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
