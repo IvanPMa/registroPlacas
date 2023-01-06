@@ -30,7 +30,7 @@ while True:
     x2 = int(x1 * 2) #Hasta el inicio del 3/3 de la imagen
 
     # En y:
-    y1 = int(an / 3) #Tomamos el 1/3 de la imagen
+    y1 = int(al / 3) #Tomamos el 1/3 de la imagen
     y2 = int(y1 * 2) #Hasta el inicio del 3/3 de la imagen
 
     #Texto en pantalla
